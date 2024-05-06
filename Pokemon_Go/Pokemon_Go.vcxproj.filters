@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="资源文件\card">
+      <UniqueIdentifier>{b26c01d6-dab1-423d-a28b-1cf261dca949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\pokemon">
+      <UniqueIdentifier>{81f731b5-e7b5-454d-aadf-12d9eec51e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\background">
+      <UniqueIdentifier>{09a20c79-b9a0-41fc-bbab-1efd21679916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\useful_data">
+      <UniqueIdentifier>{e36cf8c7-7da8-4a36-a567-fad09b5dec95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\route">
+      <UniqueIdentifier>{ca661a79-bcbe-4c39-b0f8-7645afdec19d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\battle">
+      <UniqueIdentifier>{203b394c-17ea-4bd7-99c7-3d27192853ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\sound">
+      <UniqueIdentifier>{635ff5e9-ec06-4411-9edd-becc79280c6c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon_Go.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pokemon_Go.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Event_Function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Paint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Battle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Pokemon_Go.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\pikachu_icon.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokemon_2.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokemon_3.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokemon_4.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\choose_bg.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\title.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\nothing.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\help.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="Pokemon_Go.ico">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\return.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\start.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\route_choose_bg.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\battle_route.bmp">
+      <Filter>资源文件\route</Filter>
+    </Image>
+    <Image Include="resources\boss_route.bmp">
+      <Filter>资源文件\route</Filter>
+    </Image>
+    <Image Include="resources\hospital_route.bmp">
+      <Filter>资源文件\route</Filter>
+    </Image>
+    <Image Include="resources\shop_route.bmp">
+      <Filter>资源文件\route</Filter>
+    </Image>
+    <Image Include="resources\pokeback_1.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokeback_2.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokeback_3.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\pokeback_4.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\card_choose_bg.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\skip_card_choose.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\battle_bg.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_bg.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\rival_1.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\boss.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\rival_2.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\rival_3.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\rival_4.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\rival_5.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\card_1.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_2.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_3.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\menu.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\regame.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\return_game.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\stop.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\databox_me.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\databox_rival.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\hp_line.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\num.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\slash.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\lose.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\win.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\end_round.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\attack.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\defense.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\power.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\speed.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\affect.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\discarded_cards.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\draw_cards.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\energy.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\card_4.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_5.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_6.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_7.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_8.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_9.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_10.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_11.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_12.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\card_wound.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+    <Image Include="resources\info_1.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\info_2.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\info_3.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\info_4.bmp">
+      <Filter>资源文件\pokemon</Filter>
+    </Image>
+    <Image Include="resources\help_1.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_2.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_3.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_4.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_5.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\help_6.bmp">
+      <Filter>资源文件\background</Filter>
+    </Image>
+    <Image Include="resources\last_help_page.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\next_help_page.bmp">
+      <Filter>资源文件\useful_data</Filter>
+    </Image>
+    <Image Include="resources\consumed_energy.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\lack_energy.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\defend_act.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\attack_act.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\card_select.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\affect.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\attack.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\battle.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\BW_lvup.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\Choose.WAV">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\defend.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\heal.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\hit_defense.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\level_up.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\lose.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\trainer-victory.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\touch.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+    <Media Include="resources\win.wav">
+      <Filter>资源文件\sound</Filter>
+    </Media>
+  </ItemGroup>
+</Project>
