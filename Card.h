@@ -30,4 +30,12 @@ public:
 
 
 	void affect(HWND hWnd);		//卡牌效果
+	static Card* CreateCard(int ID);//创建卡片
+	static void DrawCards(HWND hWnd, int num);//从抽牌区抽牌函数
+	static void DeleteCard(HWND hWnd);//战斗结束后清空三个区域的函数
+	static void CardChoose(HWND hWnd);//随机卡牌选择函数
+	static void UpdateCards(HWND hWnd);//将弃牌区的卡牌放入抽牌区的函数
+	static void PlayCard(HWND hWnd, int num);//出牌函数
+	static void RefreshCards(HWND hWnd);//刷新卡牌显示
+	static void DeleteCardChoose(HWND hWnd);//卡牌选择后的删除函数
 };

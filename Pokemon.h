@@ -48,4 +48,6 @@ public:
 	Rival(int total_heart, int width, int height, int x, int y, HBITMAP img) :
 		Pokemon(total_heart,width,height,x, y, img)
 	{}
+	static void RivalAction(HWND hWnd, int roundnum, int intention);//对手行动函数
+	static void CreateRival(HWND hWnd, bool boss);//创建对手函数
 };

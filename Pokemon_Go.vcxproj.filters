@@ -68,6 +68,9 @@
     <ClCompile Include="Battle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Pokemon_Go.rc">

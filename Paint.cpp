@@ -1,4 +1,5 @@
 #include "Pokemon_Go.h"
+
 //»æÍ¼º¯Êý
 void Paint(HWND hWnd)
 {

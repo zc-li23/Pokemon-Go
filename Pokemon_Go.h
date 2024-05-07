@@ -229,7 +229,6 @@ extern vector<Pokemon*> pokemons;
 #pragma region 游戏函数声明
 
 void InitGame(HWND hWnd, WPARAM wParam, LPARAM lParam);
-void InitStage(HWND hWnd, int Stage_ID);
 void TimerUpdate(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void KeyUp(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void KeyDown(HWND hWnd, WPARAM wParam, LPARAM lParam);
@@ -237,23 +236,10 @@ void MouseMove(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void LButtonUp(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void LButtonDown(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void Paint(HWND hWnd);
-void RouteChoose(HWND hWnd);
 void DeleteData(HWND hWnd);
-void RefreshRoute(HWND hWnd);
-void CreateRival(HWND hWnd,bool boss);
-void CardChoose(HWND hWnd);
-void DeleteCardChoose(HWND hWnd);
-Button* CreateButton(int buttonID, HBITMAP img, int width, int height, int x, int y);
-Card* CreateCard(int ID);
 void DetectGameState(HWND hWnd);
 void StartBattle(HWND hWnd);
-void DrawCards(HWND hWnd,int num);
-void UpdateCards(HWND hWnd);
-void DeleteCard(HWND hWnd);
-void PlayCard(HWND hWnd, int num);
-void RefreshCards(HWND hWnd);
 void EndRound(HWND hWnd, int roundnum);
-void RivalAction(HWND hWnd, int roundnum, int intention);
 
 #pragma endregion
 

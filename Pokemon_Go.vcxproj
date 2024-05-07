@@ -139,6 +139,7 @@
     <ClCompile Include="Event_Function.cpp" />
     <ClCompile Include="Paint.cpp" />
     <ClCompile Include="Pokemon_Go.cpp" />
+    <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Pokemon_Go.rc" />

@@ -1,46 +1,7 @@
 #include "Pokemon_Go.h"
-//进入战斗添加抽牌区函数
-void StartBattle(HWND hWnd)
-{
-	for (int i = 0; i < cards.size(); i++)
-		draw_cards.push_back(cards[i]);
-	MyPokemon->energy = MyPokemon->full_energy;
-	if (MyPokemon->total_heart == 50) MyPokemon->power = 5;
-	if (MyPokemon->total_heart == 60) MyPokemon->speed = 5;
-	RivalAction(hWnd, 0, RivalPokemon->intention);
-	DrawCards(hWnd,4);
-	return;
-}
 
-//从抽牌区抽牌函数
-void DrawCards(HWND hWnd,int num)
-{
-	for (int i = 1; i <= num; i++)
-	{
-		if (draw_cards.size() <= 0)
-			UpdateCards(hWnd);
-		int temp = rand() % draw_cards.size();
-		if (draw_cards[temp] != NULL)
-		{
-			hand_cards.push_back(draw_cards[temp]);
-			draw_cards.erase(draw_cards.begin() + temp);
-		}
-	}
-	RefreshCards(hWnd);
-	return;
-}
 
-//将弃牌区的卡牌放入抽牌区的函数
-void UpdateCards(HWND hWnd)
-{
-	for (int i = 0; i < discarded_cards.size(); i++)
-		draw_cards.push_back(discarded_cards[i]);
-	if (!discarded_cards.empty()) discarded_cards.clear();
-	return;
-}
-
-//对手行动函数
-void RivalAction(HWND hWnd, int roundnum, int intention)
+void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 {
 	if (RivalPokemon->id == 1)
 	{
@@ -309,9 +270,9 @@ void RivalAction(HWND hWnd, int roundnum, int intention)
 			else if (intention == AFFECT)
 			{
 				PlaySound(MAKEINTRESOURCE(IDR_AFFECT_DOWN), NULL, SND_RESOURCE | SND_SYNC);
-				discarded_cards.push_back(CreateCard(WOUND));
-				discarded_cards.push_back(CreateCard(WOUND));
-				discarded_cards.push_back(CreateCard(WOUND));
+				discarded_cards.push_back(Card::CreateCard(WOUND));
+				discarded_cards.push_back(Card::CreateCard(WOUND));
+				discarded_cards.push_back(Card::CreateCard(WOUND));
 			}
 		}
 		if (round_num % 2 ==0)
@@ -360,8 +321,8 @@ void RivalAction(HWND hWnd, int roundnum, int intention)
 				PlaySound(MAKEINTRESOURCE(IDR_AFFECT_DOWN), NULL, SND_RESOURCE | SND_SYNC);
 				RivalPokemon->power += 10;
 				RivalPokemon->speed += 10;
-				discarded_cards.push_back(CreateCard(WOUND));
-				discarded_cards.push_back(CreateCard(WOUND));
+				discarded_cards.push_back(Card::CreateCard(WOUND));
+				discarded_cards.push_back(Card::CreateCard(WOUND));
 			}
 		}
 		int temp = rand() % 6;
@@ -385,111 +346,68 @@ void RivalAction(HWND hWnd, int roundnum, int intention)
 	return;
 }
 
-//出牌函数
-void PlayCard(HWND hWnd, int num)
+
+void Rival::CreateRival(HWND hWnd, bool boss)
 {
-	if (hand_cards[num - 1]->expend <= MyPokemon->energy)
+	if (boss == 0)
 	{
-		MyPokemon->energy -= hand_cards[num - 1]->expend;
-		if (hand_cards[num - 1]->harm != 0)
+		int temp = rand() % 5;
+		if (temp == 0)
 		{
-			if (RivalPokemon->defense == 0)
-			{
-				RivalPokemon->heart -= hand_cards[num - 1]->harm + MyPokemon->power;
-				PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
-			}
-			else
-			{
-				if (hand_cards[num - 1]->harm + MyPokemon->power <= RivalPokemon->defense)
-				{
-					RivalPokemon->defense -= (hand_cards[num - 1]->harm + MyPokemon->power);
-					PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
-				}
-				else
-				{
-					RivalPokemon->heart -= (hand_cards[num - 1]->harm + MyPokemon->power - RivalPokemon->defense);
-					RivalPokemon->defense = 0;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
-				}
-			}
+			RivalPokemon->total_heart = 60;
+			RivalPokemon->heart = RivalPokemon->total_heart;
+			RivalPokemon->img = bmp_rival_5;
+			RivalPokemon->id = 5;
 		}
-		if (hand_cards[num - 1]->defend != 0)
+		else if (temp == 1)
 		{
-			MyPokemon->defense += hand_cards[num - 1]->defend + MyPokemon->speed;
-			PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
+			RivalPokemon->total_heart = 40;
+			RivalPokemon->heart = RivalPokemon->total_heart;
+			RivalPokemon->img = bmp_rival_1;
+			RivalPokemon->id = 1;
 		}
-		hand_cards[num - 1]->affect(hWnd);
-		for (int i = 0; i < buttons.size(); i++)
+		else if (temp == 2)
 		{
-			if (buttons[i] != nullptr)
-			{
-				int id = buttons[i]->buttonID;
-				if (id == BUTTON_CARD_1 + num - 1)
-				{
-					delete buttons[i];
-					buttons[i] = nullptr;  // 避免悬挂指针  
-					buttons.erase(buttons.begin() + i);
-				}
-			}
+			RivalPokemon->total_heart = 50;
+			RivalPokemon->heart = RivalPokemon->total_heart;
+			RivalPokemon->img = bmp_rival_2;
+			RivalPokemon->id = 2;
 		}
-		if (hand_cards[num - 1]->way == 0) discarded_cards.push_back(hand_cards[num - 1]);
-		hand_cards.erase(hand_cards.begin() + num - 1);
-		RefreshCards(hWnd);
+		else if (temp == 3)
+		{
+			RivalPokemon->total_heart = 70;
+			RivalPokemon->heart = RivalPokemon->total_heart;
+			RivalPokemon->img = bmp_rival_3;
+			RivalPokemon->id = 3;
+		}
+		else if (temp == 4)
+		{
+			RivalPokemon->total_heart = 90;
+			RivalPokemon->heart = RivalPokemon->total_heart;
+			RivalPokemon->img = bmp_rival_4;
+			RivalPokemon->id = 4;
+		}
+	}
+	else
+	{
+		RivalPokemon->total_heart = 90;
+		RivalPokemon->heart = RivalPokemon->total_heart;
+		RivalPokemon->img = bmp_boss;
+		RivalPokemon->id = 0;
 	}
 	return;
 }
 
-//战斗结束后清空三个区域的函数
-void DeleteCard(HWND hWnd)
+//进入战斗添加抽牌区函数
+void StartBattle(HWND hWnd)
 {
-	if (!hand_cards.empty()) hand_cards.clear();
-	if (!draw_cards.empty()) draw_cards.clear();
-	if (!discarded_cards.empty()) discarded_cards.clear();
-	return;
-}
-
-//刷新卡牌显示
-void RefreshCards(HWND hWnd)
-{
-	for (int i = 1; i <= min(4, hand_cards.size()); i++)
-	{
-		if (i == 1)
-		{
-			bmp_hand_card_1 = hand_cards[i - 1]->img;
-		}
-		else if (i == 2)
-		{
-			bmp_hand_card_2 = hand_cards[i - 1]->img;
-		}
-		else if (i == 3)
-		{
-			bmp_hand_card_3 = hand_cards[i - 1]->img;
-		}
-		else if (i == 4)
-		{
-			bmp_hand_card_4 = hand_cards[i - 1]->img;
-		}
-	}
-	for (int i = 0; i < buttons.size(); i++)
-	{
-		if (buttons[i] != nullptr)
-		{
-			int id = buttons[i]->buttonID;
-			if (id == BUTTON_CARD_1 || id == BUTTON_CARD_2 || id == BUTTON_CARD_3 || id == BUTTON_CARD_4)
-			{
-				delete buttons[i];
-				buttons[i] = nullptr;  // 避免悬挂指针  
-				buttons.erase(buttons.begin() + i);
-				i--;
-			}
-		}
-	}
-	if (hand_cards.size() >= 1) Button* handcard1Button = CreateButton(BUTTON_CARD_1, bmp_hand_card_1, 200, 300, 100, 470);
-	if (hand_cards.size() >= 2) Button* handcard2Button = CreateButton(BUTTON_CARD_2, bmp_hand_card_2, 200, 300, 300, 470);
-	if (hand_cards.size() >= 3) Button* handcard3Button = CreateButton(BUTTON_CARD_3, bmp_hand_card_3, 200, 300, 500, 470);
-	if (hand_cards.size() >= 4) Button* handcard4Button = CreateButton(BUTTON_CARD_4, bmp_hand_card_4, 200, 300, 700, 470);
-	if (currentStage->stageID == STAGE_BATTLE)InitStage(hWnd, STAGE_BATTLE);
-	if (currentStage->stageID == STAGE_BOSS)InitStage(hWnd, STAGE_BOSS);
+	for (int i = 0; i < cards.size(); i++)
+		draw_cards.push_back(cards[i]);
+	MyPokemon->energy = MyPokemon->full_energy;
+	if (MyPokemon->total_heart == 50) MyPokemon->power = 5;
+	if (MyPokemon->total_heart == 60) MyPokemon->speed = 5;
+	Rival::RivalAction(hWnd, 0, RivalPokemon->intention);
+	Card::DrawCards(hWnd,4);
 	return;
 }
 
@@ -503,9 +421,95 @@ void EndRound(HWND hWnd, int roundnum)
 	}
 	if (!hand_cards.empty()) hand_cards.clear();
 	MyPokemon->energy = MyPokemon->full_energy;
-	RivalAction(hWnd, round_num,RivalPokemon->intention);
+	Rival::RivalAction(hWnd, round_num,RivalPokemon->intention);
 	MyPokemon->defense = 0;
-	if(MyPokemon->heart > 0 && RivalPokemon->heart > 0) DrawCards(hWnd,3);
+	if(MyPokemon->heart > 0 && RivalPokemon->heart > 0) Card::DrawCards(hWnd,3);
 	round_num++;
+	return;
+}
+
+//刷新游戏函数
+void DeleteData(HWND hWnd)
+{
+	route_num = 0;
+	pokemon_select = 0;
+	bmp_left_route = NULL;
+	bmp_mid_route = NULL;
+	bmp_right_route = NULL;
+	for (int i = 0; i < cards.size(); i++)
+	{
+		if (cards[i] != nullptr) {
+			delete cards[i];
+			cards[i] = nullptr;  // 避免悬挂指针  
+		}
+	}
+	if (!cards.empty()) cards.clear();
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		if (buttons[i] != nullptr)
+		{
+			if (buttons[i]->buttonID == BUTTON_BATTLE_ROUTE || buttons[i]->buttonID == BUTTON_BOSS_ROUTE ||
+				buttons[i]->buttonID == BUTTON_HOSPITAL_ROUTE || buttons[i]->buttonID == BUTTON_SHOP_ROUTE)
+			{
+				delete buttons[i];
+				buttons[i] = nullptr;  // 避免悬挂指针  
+				buttons.erase(buttons.begin() + i);
+				i--;
+			}
+		}
+	}
+	left_route = mid_route = right_route = 0;
+	Card::DeleteCard(hWnd);
+	return;
+}
+
+
+//检测游戏进程函数
+void DetectGameState(HWND hWnd)
+{
+	if (currentStage->stageID == STAGE_BATTLE && RivalPokemon->heart <= 0)
+	{
+		PlaySound(MAKEINTRESOURCE(IDR_WIN_BATTLE), NULL, SND_RESOURCE | SND_ASYNC);
+		Stage::InitStage(hWnd, STAGE_CARD_CHOOSE);
+		RivalPokemon->heart = RivalPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+	}
+	else if (currentStage->stageID == STAGE_BOSS && RivalPokemon->heart <= 0)
+	{
+		Stage::InitStage(hWnd, STAGE_WIN);
+		RivalPokemon->heart = RivalPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+	}
+	else if ((currentStage->stageID == STAGE_BATTLE || currentStage->stageID == STAGE_BOSS) && MyPokemon->heart <= 0)
+	{
+		Stage::InitStage(hWnd, STAGE_LOSE);
+		MyPokemon->heart = MyPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+	}
+
+	if (MyPokemon->speed >= 100) MyPokemon->speed = 99;
+	if (RivalPokemon->speed >= 100) RivalPokemon->speed = 99;
+	if (RivalPokemon->power >= 100) RivalPokemon->power = 99;
+	if (MyPokemon->power >= 100) MyPokemon->power = 99;
+	if (MyPokemon->defense >= 100) MyPokemon->defense = 99;
+	if (RivalPokemon->defense >= 100) RivalPokemon->defense = 99;
 	return;
 }
