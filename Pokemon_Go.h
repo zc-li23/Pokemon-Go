@@ -111,7 +111,9 @@ extern HBITMAP bmp_info_4;						//精灵4信息的图片
 extern HBITMAP bmp_slash;						//斜杠的图片
 extern HBITMAP bmp_lose;						//失败的图片
 extern HBITMAP bmp_win;							//胜利的图片
+extern HBITMAP bmp_consumed_energy;				//将要消耗的能量的图片
 extern HBITMAP bmp_energy;						//能量的图片
+extern HBITMAP bmp_lack_energy;					//缺少能量的图片
 extern HBITMAP bmp_draw_cards;					//抽卡区的图片
 extern HBITMAP bmp_discarded_cards;				//弃牌区的图片
 extern HBITMAP bmp_attack;						//攻击的图片
@@ -161,6 +163,9 @@ extern HBITMAP bmp_right_route;					//右路线图片
 extern HBITMAP bmp_mid_card;					//中间卡牌图片
 extern HBITMAP bmp_left_card;					//左边卡牌图片
 extern HBITMAP bmp_right_card;					//右边卡牌图片
+extern HBITMAP bmp_card_select;					//选中卡片图片
+extern HBITMAP bmp_attack_act;					//攻击动画图片
+extern HBITMAP bmp_defend_act;					//防御动画图片
 extern HBITMAP bmp_card_1;						//卡牌一图片
 extern HBITMAP bmp_card_2;						//卡牌二图片
 extern HBITMAP bmp_card_3;						//卡牌三图片
@@ -188,11 +193,13 @@ extern HBITMAP bmp_hand_card_2;				//手牌二图片
 extern HBITMAP bmp_hand_card_3;				//手牌三图片
 extern HBITMAP bmp_hand_card_4;				//手牌四图片
 
+extern int consumed_energy;
 extern int round_num;
 extern int stop_stage;
 extern int mouseX;
 extern int mouseY;
 extern int pokemon_select;
+extern int card_select;
 extern int help_page;
 extern int route_num;						//当前路线数
 extern int left_route;
@@ -212,6 +219,15 @@ extern bool keyADown;
 extern bool keyDDown;
 extern bool keyESC;
 
+extern int attack_on;		//1为敌人，2为我
+extern int defend_on;		//1为敌人，2为我
+extern int attack_frame_id;
+extern int defend_frame_id;
+extern int FRAMES_ATTACK[];
+extern int FRAMES_ATTACK_COUNT;
+extern int FRAMES_DEFEND[];
+extern int FRAMES_DEFEND_COUNT;
+
 extern Stage* currentStage; //当前场景
 extern Me* MyPokemon;				//我当前的宝可梦
 extern Rival* RivalPokemon;			//对手的宝可梦
@@ -229,6 +245,7 @@ extern vector<Pokemon*> pokemons;
 #pragma region 游戏函数声明
 
 void InitGame(HWND hWnd, WPARAM wParam, LPARAM lParam);
+void DetectMouse(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void TimerUpdate(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void KeyUp(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void KeyDown(HWND hWnd, WPARAM wParam, LPARAM lParam);

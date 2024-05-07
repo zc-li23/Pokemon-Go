@@ -68,7 +68,7 @@ void LButtonDown(HWND hWnd, WPARAM wParam, LPARAM lParam)
 				&& button->y <= mouseY
 				&& button->y + button->height >= mouseY)
 			{
-				button->Button_Affect(hWnd, wParam, lParam, i, have_found);
+				buttons[i]->Button_Affect(hWnd, wParam, lParam, i, have_found);
 			}
 		}
 	}
@@ -88,6 +88,7 @@ void MouseMove(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	mouseX = LOWORD(lParam);
 	mouseY = HIWORD(lParam);
 	mouseDown = false;
+	DetectMouse(hWnd, wParam, lParam);
 }
 
 // 初始化游戏窗体函数
@@ -105,12 +106,17 @@ void InitGame(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	bmp_pokemon_4 = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_POKEMON_4));
 	bmp_choose_bg = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_CHOOSE_BG));
 	bmp_battle_bg = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_BATTLE_BG));
+	bmp_consumed_energy = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_CONSUMED_ENERGY));
+	bmp_lack_energy = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_LACK_ENERGY));
 	bmp_help_bg = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_HELP_BG));
 	bmp_route_choose_bg = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_ROUTE_CHOOSE_BG));
 	bmp_card_choose_bg = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_CARD_CHOOSE_BG));
 	bmp_nothing = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_NOTHING));
 	bmp_boss_route = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_BOSS_ROUTE));
 	bmp_shop_route = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_SHOP_ROUTE));
+	bmp_card_select = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_CARD_SELECT));
+	bmp_attack_act = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_ATTACK_ACT));
+	bmp_defend_act = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_DEFEND_ACT));
 	bmp_battle_route = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_BATTLE_ROUTE));
 	bmp_hospital_route = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_HOSPITAL_ROUTE));
 	bmp_pokeback_1 = LoadBitmap(((LPCREATESTRUCT)lParam)->hInstance, MAKEINTRESOURCE(IDB_POKEBACK_1));
@@ -206,4 +212,168 @@ void TimerUpdate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	DetectGameState(hWnd);
 	//刷新显示
 	InvalidateRect(hWnd, NULL, FALSE);
+	if (attack_on)
+	{
+		attack_frame_id++;
+		if (attack_frame_id >= FRAMES_ATTACK_COUNT)
+		{
+			attack_on = 0;
+			attack_frame_id = 0;
+		}
+	}
+	if (defend_on)
+	{
+		defend_frame_id++;
+		if (defend_frame_id >= FRAMES_DEFEND_COUNT)
+		{
+			defend_on = 0;
+			defend_frame_id = 0;
+		}
+	}
+}
+
+//刷新游戏函数
+void DeleteData(HWND hWnd)
+{
+	route_num = 0;
+	pokemon_select = 0;
+	bmp_left_route = NULL;
+	bmp_mid_route = NULL;
+	bmp_right_route = NULL;
+	for (int i = 0; i < cards.size(); i++)
+	{
+		if (cards[i] != nullptr) {
+			delete cards[i];
+			cards[i] = nullptr;  // 避免悬挂指针  
+		}
+	}
+	if (!cards.empty()) cards.clear();
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		if (buttons[i] != nullptr)
+		{
+			if (buttons[i]->buttonID == BUTTON_BATTLE_ROUTE || buttons[i]->buttonID == BUTTON_BOSS_ROUTE ||
+				buttons[i]->buttonID == BUTTON_HOSPITAL_ROUTE || buttons[i]->buttonID == BUTTON_SHOP_ROUTE)
+			{
+				delete buttons[i];
+				buttons[i] = nullptr;  // 避免悬挂指针  
+				buttons.erase(buttons.begin() + i);
+				i--;
+			}
+		}
+	}
+	left_route = mid_route = right_route = 0;
+	Card::DeleteCard(hWnd);
+	return;
+}
+
+//检测游戏进程函数
+void DetectGameState(HWND hWnd)
+{
+	if (currentStage->stageID == STAGE_BATTLE && RivalPokemon->heart <= 0)
+	{
+		PlaySound(MAKEINTRESOURCE(IDR_WIN_BATTLE), NULL, SND_RESOURCE | SND_ASYNC);
+		Stage::InitStage(hWnd, STAGE_CARD_CHOOSE);
+		RivalPokemon->heart = RivalPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+		attack_on = 0;
+		defend_on = 0;
+		attack_frame_id = 0;
+		defend_frame_id = 0;
+	}
+	else if (currentStage->stageID == STAGE_BOSS && RivalPokemon->heart <= 0)
+	{
+		Stage::InitStage(hWnd, STAGE_WIN);
+		RivalPokemon->heart = RivalPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+		attack_on = 0;
+		defend_on = 0;
+		attack_frame_id = 0;
+		defend_frame_id = 0;
+	}
+	else if ((currentStage->stageID == STAGE_BATTLE || currentStage->stageID == STAGE_BOSS) && MyPokemon->heart <= 0)
+	{
+		attack_on = 0;
+		defend_on = 0;
+		attack_frame_id = 0;
+		defend_frame_id = 0;
+		Stage::InitStage(hWnd, STAGE_LOSE);
+		MyPokemon->heart = MyPokemon->total_heart;
+		RivalPokemon->power = 0;
+		RivalPokemon->speed = 0;
+		MyPokemon->power = 0;
+		MyPokemon->speed = 0;
+		MyPokemon->defense = 0;
+		RivalPokemon->defense = 0;
+		Card::DeleteCard(hWnd);
+	}
+	
+	if (MyPokemon->speed >= 100) MyPokemon->speed = 99;
+	if (RivalPokemon->speed >= 100) RivalPokemon->speed = 99;
+	if (RivalPokemon->power >= 100) RivalPokemon->power = 99;
+	if (MyPokemon->power >= 100) MyPokemon->power = 99;
+	if (MyPokemon->defense >= 100) MyPokemon->defense = 99;
+	if (RivalPokemon->defense >= 100) RivalPokemon->defense = 99;
+	return;
+}
+
+//检测鼠标位置函数
+void DetectMouse(HWND hWnd, WPARAM wParam, LPARAM lParam)
+{
+	mouseX = LOWORD(lParam);
+	mouseY = HIWORD(lParam);
+	consumed_energy = 0;
+	card_select = 0;
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		Button* button = buttons[i];
+		if (button->visible)
+		{
+			if (button->x <= mouseX
+				&& button->x + button->width >= mouseX
+				&& button->y <= mouseY
+				&& button->y + button->height >= mouseY)
+			{
+				switch (button->buttonID)
+				{
+				case BUTTON_CARD_1:
+				{
+					consumed_energy = hand_cards[0]->expend;
+					card_select = 1;
+					break;
+				}
+				case BUTTON_CARD_2:
+				{
+					consumed_energy = hand_cards[1]->expend;
+					card_select = 2;
+					break;
+				}
+				case BUTTON_CARD_3:
+				{
+					consumed_energy = hand_cards[2]->expend;
+					card_select = 3;
+					break;
+				}
+				case BUTTON_CARD_4:
+				{
+					consumed_energy = hand_cards[3]->expend;
+					card_select = 4;
+					break;
+				}
+				}
+			}
+		}
+	}
 }

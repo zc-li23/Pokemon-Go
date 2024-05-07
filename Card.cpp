@@ -196,6 +196,147 @@ void Card::affect(HWND hWnd)
 }
 
 
+void Card::DrawCards(HWND hWnd, int num)
+{
+	for (int i = 1; i <= num; i++)
+	{
+		if (draw_cards.size() <= 0)
+			Card::UpdateCards(hWnd);
+		int temp = rand() % draw_cards.size();
+		if (draw_cards[temp] != NULL)
+		{
+			hand_cards.push_back(draw_cards[temp]);
+			draw_cards.erase(draw_cards.begin() + temp);
+		}
+	}
+	Card::RefreshCards(hWnd);
+	return;
+}
+
+
+void Card::UpdateCards(HWND hWnd)
+{
+	for (int i = 0; i < discarded_cards.size(); i++)
+		draw_cards.push_back(discarded_cards[i]);
+	if (!discarded_cards.empty()) discarded_cards.clear();
+	return;
+}
+
+
+void Card::PlayCard(HWND hWnd, int num)
+{
+	if (hand_cards[num - 1]->expend <= MyPokemon->energy)
+	{
+		consumed_energy = 0;
+		card_select = 0;
+		MyPokemon->energy -= hand_cards[num - 1]->expend;
+		if (hand_cards[num - 1]->harm != 0)
+		{
+			attack_on = 2;
+			attack_frame_id = 0;
+			if (RivalPokemon->defense == 0)
+			{
+				RivalPokemon->heart -= hand_cards[num - 1]->harm + MyPokemon->power;
+				PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
+			}
+			else
+			{
+				if (hand_cards[num - 1]->harm + MyPokemon->power <= RivalPokemon->defense)
+				{
+					RivalPokemon->defense -= (hand_cards[num - 1]->harm + MyPokemon->power);
+					PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
+				}
+				else
+				{
+					RivalPokemon->heart -= (hand_cards[num - 1]->harm + MyPokemon->power - RivalPokemon->defense);
+					RivalPokemon->defense = 0;
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
+				}
+			}
+		}
+		if (hand_cards[num - 1]->defend != 0)
+		{
+			defend_on = 1;
+			defend_frame_id = 0;
+			MyPokemon->defense += hand_cards[num - 1]->defend + MyPokemon->speed;
+			PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
+		}
+		hand_cards[num - 1]->affect(hWnd);
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			if (buttons[i] != nullptr)
+			{
+				int id = buttons[i]->buttonID;
+				if (id == BUTTON_CARD_1 + num - 1)
+				{
+					delete buttons[i];
+					buttons[i] = nullptr;  // ±ÜÃâÐü¹ÒÖ¸Õë  
+					buttons.erase(buttons.begin() + i);
+				}
+			}
+		}
+		if (hand_cards[num - 1]->way == 0) discarded_cards.push_back(hand_cards[num - 1]);
+		hand_cards.erase(hand_cards.begin() + num - 1);
+		Card::RefreshCards(hWnd);
+	}
+	return;
+}
+
+
+void Card::DeleteCard(HWND hWnd)
+{
+	if (!hand_cards.empty()) hand_cards.clear();
+	if (!draw_cards.empty()) draw_cards.clear();
+	if (!discarded_cards.empty()) discarded_cards.clear();
+	return;
+}
+
+
+void Card::RefreshCards(HWND hWnd)
+{
+	for (int i = 1; i <= min(4, hand_cards.size()); i++)
+	{
+		if (i == 1)
+		{
+			bmp_hand_card_1 = hand_cards[i - 1]->img;
+		}
+		else if (i == 2)
+		{
+			bmp_hand_card_2 = hand_cards[i - 1]->img;
+		}
+		else if (i == 3)
+		{
+			bmp_hand_card_3 = hand_cards[i - 1]->img;
+		}
+		else if (i == 4)
+		{
+			bmp_hand_card_4 = hand_cards[i - 1]->img;
+		}
+	}
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		if (buttons[i] != nullptr)
+		{
+			int id = buttons[i]->buttonID;
+			if (id == BUTTON_CARD_1 || id == BUTTON_CARD_2 || id == BUTTON_CARD_3 || id == BUTTON_CARD_4)
+			{
+				delete buttons[i];
+				buttons[i] = nullptr;  // ±ÜÃâÐü¹ÒÖ¸Õë  
+				buttons.erase(buttons.begin() + i);
+				i--;
+			}
+		}
+	}
+	if (hand_cards.size() >= 1) Button* handcard1Button = Button::CreateButton(BUTTON_CARD_1, bmp_hand_card_1, 200, 300, 100, 470);
+	if (hand_cards.size() >= 2) Button* handcard2Button = Button::CreateButton(BUTTON_CARD_2, bmp_hand_card_2, 200, 300, 300, 470);
+	if (hand_cards.size() >= 3) Button* handcard3Button = Button::CreateButton(BUTTON_CARD_3, bmp_hand_card_3, 200, 300, 500, 470);
+	if (hand_cards.size() >= 4) Button* handcard4Button = Button::CreateButton(BUTTON_CARD_4, bmp_hand_card_4, 200, 300, 700, 470);
+	if (currentStage->stageID == STAGE_BATTLE)Stage::InitStage(hWnd, STAGE_BATTLE);
+	if (currentStage->stageID == STAGE_BOSS)Stage::InitStage(hWnd, STAGE_BOSS);
+	return;
+}
+
+
 void Card::CardChoose(HWND hWnd)
 {
 	int temp = rand() % 12;
@@ -384,141 +525,6 @@ void Card::CardChoose(HWND hWnd)
 	Button* left_cardchooseButton = Button::CreateButton(left_card, bmp_left_card, 200, 300, 150, 150);
 	Button* mid_cardchooseButton = Button::CreateButton(mid_card, bmp_mid_card, 200, 300, 400, 150);
 	Button* right_cardchooseButton = Button::CreateButton(right_card, bmp_right_card, 200, 300, 650, 150);
-	return;
-}
-
-
-void Card::DrawCards(HWND hWnd, int num)
-{
-	for (int i = 1; i <= num; i++)
-	{
-		if (draw_cards.size() <= 0)
-			Card::UpdateCards(hWnd);
-		int temp = rand() % draw_cards.size();
-		if (draw_cards[temp] != NULL)
-		{
-			hand_cards.push_back(draw_cards[temp]);
-			draw_cards.erase(draw_cards.begin() + temp);
-		}
-	}
-	Card::RefreshCards(hWnd);
-	return;
-}
-
-
-void Card::DeleteCard(HWND hWnd)
-{
-	if (!hand_cards.empty()) hand_cards.clear();
-	if (!draw_cards.empty()) draw_cards.clear();
-	if (!discarded_cards.empty()) discarded_cards.clear();
-	return;
-}
-
-
-void Card::PlayCard(HWND hWnd, int num)
-{
-	if (hand_cards[num - 1]->expend <= MyPokemon->energy)
-	{
-		MyPokemon->energy -= hand_cards[num - 1]->expend;
-		if (hand_cards[num - 1]->harm != 0)
-		{
-			if (RivalPokemon->defense == 0)
-			{
-				RivalPokemon->heart -= hand_cards[num - 1]->harm + MyPokemon->power;
-				PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
-			}
-			else
-			{
-				if (hand_cards[num - 1]->harm + MyPokemon->power <= RivalPokemon->defense)
-				{
-					RivalPokemon->defense -= (hand_cards[num - 1]->harm + MyPokemon->power);
-					PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
-				}
-				else
-				{
-					RivalPokemon->heart -= (hand_cards[num - 1]->harm + MyPokemon->power - RivalPokemon->defense);
-					RivalPokemon->defense = 0;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
-				}
-			}
-		}
-		if (hand_cards[num - 1]->defend != 0)
-		{
-			MyPokemon->defense += hand_cards[num - 1]->defend + MyPokemon->speed;
-			PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
-		}
-		hand_cards[num - 1]->affect(hWnd);
-		for (int i = 0; i < buttons.size(); i++)
-		{
-			if (buttons[i] != nullptr)
-			{
-				int id = buttons[i]->buttonID;
-				if (id == BUTTON_CARD_1 + num - 1)
-				{
-					delete buttons[i];
-					buttons[i] = nullptr;  // ±ÜÃâÐü¹ÒÖ¸Õë  
-					buttons.erase(buttons.begin() + i);
-				}
-			}
-		}
-		if (hand_cards[num - 1]->way == 0) discarded_cards.push_back(hand_cards[num - 1]);
-		hand_cards.erase(hand_cards.begin() + num - 1);
-		Card::RefreshCards(hWnd);
-	}
-	return;
-}
-
-
-void Card::RefreshCards(HWND hWnd)
-{
-	for (int i = 1; i <= min(4, hand_cards.size()); i++)
-	{
-		if (i == 1)
-		{
-			bmp_hand_card_1 = hand_cards[i - 1]->img;
-		}
-		else if (i == 2)
-		{
-			bmp_hand_card_2 = hand_cards[i - 1]->img;
-		}
-		else if (i == 3)
-		{
-			bmp_hand_card_3 = hand_cards[i - 1]->img;
-		}
-		else if (i == 4)
-		{
-			bmp_hand_card_4 = hand_cards[i - 1]->img;
-		}
-	}
-	for (int i = 0; i < buttons.size(); i++)
-	{
-		if (buttons[i] != nullptr)
-		{
-			int id = buttons[i]->buttonID;
-			if (id == BUTTON_CARD_1 || id == BUTTON_CARD_2 || id == BUTTON_CARD_3 || id == BUTTON_CARD_4)
-			{
-				delete buttons[i];
-				buttons[i] = nullptr;  // ±ÜÃâÐü¹ÒÖ¸Õë  
-				buttons.erase(buttons.begin() + i);
-				i--;
-			}
-		}
-	}
-	if (hand_cards.size() >= 1) Button* handcard1Button = Button::CreateButton(BUTTON_CARD_1, bmp_hand_card_1, 200, 300, 100, 470);
-	if (hand_cards.size() >= 2) Button* handcard2Button = Button::CreateButton(BUTTON_CARD_2, bmp_hand_card_2, 200, 300, 300, 470);
-	if (hand_cards.size() >= 3) Button* handcard3Button = Button::CreateButton(BUTTON_CARD_3, bmp_hand_card_3, 200, 300, 500, 470);
-	if (hand_cards.size() >= 4) Button* handcard4Button = Button::CreateButton(BUTTON_CARD_4, bmp_hand_card_4, 200, 300, 700, 470);
-	if (currentStage->stageID == STAGE_BATTLE)Stage::InitStage(hWnd, STAGE_BATTLE);
-	if (currentStage->stageID == STAGE_BOSS)Stage::InitStage(hWnd, STAGE_BOSS);
-	return;
-}
-
-
-void Card::UpdateCards(HWND hWnd)
-{
-	for (int i = 0; i < discarded_cards.size(); i++)
-		draw_cards.push_back(discarded_cards[i]);
-	if (!discarded_cards.empty()) discarded_cards.clear();
 	return;
 }
 

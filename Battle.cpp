@@ -1,6 +1,5 @@
 #include "Pokemon_Go.h"
 
-
 void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 {
 	if (RivalPokemon->id == 1)
@@ -9,30 +8,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -57,30 +60,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -130,30 +137,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -188,30 +199,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -242,30 +257,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -291,30 +310,34 @@ void Rival::RivalAction(HWND hWnd, int roundnum, int intention)
 		{
 			if (intention == ATTACK)
 			{
+				attack_on = 1;
+				attack_frame_id = 0;
 				if (MyPokemon->defense == 0)
 				{
 					MyPokemon->heart -= RivalPokemon->intention_num + RivalPokemon->power;
-					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+					PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 				}
 				else
 				{
 					if (RivalPokemon->intention_num + RivalPokemon->power <= MyPokemon->defense)
 					{
 						MyPokemon->defense -= RivalPokemon->intention_num + RivalPokemon->power;
-						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_HIT_DEFENSE), NULL, SND_RESOURCE | SND_ASYNC);
 					}
 					else
 					{
 						MyPokemon->heart -= (RivalPokemon->intention_num + RivalPokemon->power - MyPokemon->defense);
-						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_SYNC);
+						PlaySound(MAKEINTRESOURCE(IDR_ATTACK), NULL, SND_RESOURCE | SND_ASYNC);
 						MyPokemon->defense = 0;
 					}
 				}
 			}
 			else if (intention == DEFEND)
 			{
+				defend_on = 2;
+				defend_frame_id = 0;
 				RivalPokemon->defense += RivalPokemon->intention_num + RivalPokemon->speed;
-				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_SYNC);
+				PlaySound(MAKEINTRESOURCE(IDR_DEFEND), NULL, SND_RESOURCE | SND_ASYNC);
 			}
 			else if (intention == AFFECT)
 			{
@@ -398,6 +421,7 @@ void Rival::CreateRival(HWND hWnd, bool boss)
 	return;
 }
 
+
 //进入战斗添加抽牌区函数
 void StartBattle(HWND hWnd)
 {
@@ -407,13 +431,17 @@ void StartBattle(HWND hWnd)
 	if (MyPokemon->total_heart == 50) MyPokemon->power = 5;
 	if (MyPokemon->total_heart == 60) MyPokemon->speed = 5;
 	Rival::RivalAction(hWnd, 0, RivalPokemon->intention);
-	Card::DrawCards(hWnd,4);
+	Card::DrawCards(hWnd, 4);
 	return;
 }
 
 //结束回合函数
 void EndRound(HWND hWnd, int roundnum)
 {
+	attack_on = 0;
+	defend_on = 0;
+	attack_frame_id = 0;
+	defend_frame_id = 0;
 	RivalPokemon->defense = 0;
 	for (int i = 0; i < hand_cards.size(); i++)
 	{
@@ -425,91 +453,5 @@ void EndRound(HWND hWnd, int roundnum)
 	MyPokemon->defense = 0;
 	if(MyPokemon->heart > 0 && RivalPokemon->heart > 0) Card::DrawCards(hWnd,3);
 	round_num++;
-	return;
-}
-
-//刷新游戏函数
-void DeleteData(HWND hWnd)
-{
-	route_num = 0;
-	pokemon_select = 0;
-	bmp_left_route = NULL;
-	bmp_mid_route = NULL;
-	bmp_right_route = NULL;
-	for (int i = 0; i < cards.size(); i++)
-	{
-		if (cards[i] != nullptr) {
-			delete cards[i];
-			cards[i] = nullptr;  // 避免悬挂指针  
-		}
-	}
-	if (!cards.empty()) cards.clear();
-	for (int i = 0; i < buttons.size(); i++)
-	{
-		if (buttons[i] != nullptr)
-		{
-			if (buttons[i]->buttonID == BUTTON_BATTLE_ROUTE || buttons[i]->buttonID == BUTTON_BOSS_ROUTE ||
-				buttons[i]->buttonID == BUTTON_HOSPITAL_ROUTE || buttons[i]->buttonID == BUTTON_SHOP_ROUTE)
-			{
-				delete buttons[i];
-				buttons[i] = nullptr;  // 避免悬挂指针  
-				buttons.erase(buttons.begin() + i);
-				i--;
-			}
-		}
-	}
-	left_route = mid_route = right_route = 0;
-	Card::DeleteCard(hWnd);
-	return;
-}
-
-
-//检测游戏进程函数
-void DetectGameState(HWND hWnd)
-{
-	if (currentStage->stageID == STAGE_BATTLE && RivalPokemon->heart <= 0)
-	{
-		PlaySound(MAKEINTRESOURCE(IDR_WIN_BATTLE), NULL, SND_RESOURCE | SND_ASYNC);
-		Stage::InitStage(hWnd, STAGE_CARD_CHOOSE);
-		RivalPokemon->heart = RivalPokemon->total_heart;
-		RivalPokemon->power = 0;
-		RivalPokemon->speed = 0;
-		MyPokemon->power = 0;
-		MyPokemon->speed = 0;
-		MyPokemon->defense = 0;
-		RivalPokemon->defense = 0;
-		Card::DeleteCard(hWnd);
-	}
-	else if (currentStage->stageID == STAGE_BOSS && RivalPokemon->heart <= 0)
-	{
-		Stage::InitStage(hWnd, STAGE_WIN);
-		RivalPokemon->heart = RivalPokemon->total_heart;
-		RivalPokemon->power = 0;
-		RivalPokemon->speed = 0;
-		MyPokemon->power = 0;
-		MyPokemon->speed = 0;
-		MyPokemon->defense = 0;
-		RivalPokemon->defense = 0;
-		Card::DeleteCard(hWnd);
-	}
-	else if ((currentStage->stageID == STAGE_BATTLE || currentStage->stageID == STAGE_BOSS) && MyPokemon->heart <= 0)
-	{
-		Stage::InitStage(hWnd, STAGE_LOSE);
-		MyPokemon->heart = MyPokemon->total_heart;
-		RivalPokemon->power = 0;
-		RivalPokemon->speed = 0;
-		MyPokemon->power = 0;
-		MyPokemon->speed = 0;
-		MyPokemon->defense = 0;
-		RivalPokemon->defense = 0;
-		Card::DeleteCard(hWnd);
-	}
-
-	if (MyPokemon->speed >= 100) MyPokemon->speed = 99;
-	if (RivalPokemon->speed >= 100) RivalPokemon->speed = 99;
-	if (RivalPokemon->power >= 100) RivalPokemon->power = 99;
-	if (MyPokemon->power >= 100) MyPokemon->power = 99;
-	if (MyPokemon->defense >= 100) MyPokemon->defense = 99;
-	if (RivalPokemon->defense >= 100) RivalPokemon->defense = 99;
 	return;
 }

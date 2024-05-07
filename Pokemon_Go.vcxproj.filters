@@ -306,6 +306,21 @@
     <Image Include="resources\next_help_page.bmp">
       <Filter>资源文件\useful_data</Filter>
     </Image>
+    <Image Include="resources\consumed_energy.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\lack_energy.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\defend_act.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\attack_act.bmp">
+      <Filter>资源文件\battle</Filter>
+    </Image>
+    <Image Include="resources\card_select.bmp">
+      <Filter>资源文件\card</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\affect.wav">

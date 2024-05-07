@@ -99,6 +99,12 @@
 #define IDR_WIN                         219
 #define IDR_BATTLE                      220
 #define IDR_LOSE                        221
+#define IDB_CONSUMED_ENERGY             223
+#define IDB_LACK_ENERGY                 224
+#define IDB_ATTACK_ACT                  225
+#define IDB_CARD_SELECT                 226
+#define IDB_BITMAP3                     227
+#define IDB_DEFEND_ACT                  227
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -106,7 +112,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        222
+#define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           110

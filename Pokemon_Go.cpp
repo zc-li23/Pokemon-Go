@@ -12,8 +12,13 @@ HBITMAP bmp_info_1;
 HBITMAP bmp_info_2;
 HBITMAP bmp_info_3;
 HBITMAP bmp_info_4;
+HBITMAP bmp_card_select;				//选中卡片图片
+HBITMAP bmp_attack_act;					//攻击动画图片
+HBITMAP bmp_defend_act;					//防御动画图片
 HBITMAP bmp_draw_cards;
 HBITMAP bmp_discarded_cards;
+HBITMAP bmp_consumed_energy;
+HBITMAP bmp_lack_energy;
 HBITMAP bmp_energy;
 HBITMAP bmp_attack;
 HBITMAP bmp_affect;
@@ -91,11 +96,13 @@ HBITMAP bmp_hand_card_2;
 HBITMAP bmp_hand_card_3;
 HBITMAP bmp_hand_card_4;
 
+int consumed_energy = 0;
 int round_num = 0;
 int stop_stage = 0;
 int mouseX = 0;
 int mouseY = 0;
 int pokemon_select = 0;
+int card_select = 0;
 int help_page = 0;
 int route_num = 0;
 int left_route = 0;
@@ -118,6 +125,15 @@ bool keyESC = false;
 Stage* currentStage = NULL;
 Me* MyPokemon = new Me(50, 200, 200, 100, 400, bmp_pokeback_1, 3);
 Rival* RivalPokemon = new Rival(50, 200, 200, 580, 130, bmp_rival_1);
+
+int attack_on = 0;
+int defend_on = 0;
+int attack_frame_id = 0;
+int defend_frame_id = 0;
+int FRAMES_ATTACK[] = { 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3 };
+int FRAMES_ATTACK_COUNT = sizeof(FRAMES_ATTACK) / sizeof(int);
+int FRAMES_DEFEND[] = { 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4 ,4, 4};
+int FRAMES_DEFEND_COUNT = sizeof(FRAMES_DEFEND) / sizeof(int);
 
 vector<Button*> buttons;
 vector<Stage*> stages;

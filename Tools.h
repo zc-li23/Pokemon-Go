@@ -19,7 +19,6 @@ public:
 	void Button_Affect(HWND hWnd, WPARAM wParam, LPARAM lParam, int i, bool& have_found);	//按下按钮函数
 };
 
-
 //场景类
 class Stage
 {
@@ -32,13 +31,12 @@ public:
 	static void InitStage(HWND hWnd, int stageID);//初始化游戏场景函数
 };
 
-
-//路线类
 #define SHOP		0		//商店
 #define BATTLE		1		//战斗
 #define HOSPITAL	2		//医院
 #define BOSS		3		//BOSS战
 
+//路线类
 class Route
 {
 public:

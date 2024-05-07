@@ -148,6 +148,7 @@
     <Image Include="Pokemon_Go.ico" />
     <Image Include="resources\affect.bmp" />
     <Image Include="resources\attack.bmp" />
+    <Image Include="resources\attack_act.bmp" />
     <Image Include="resources\battle_bg.bmp" />
     <Image Include="resources\battle_route.bmp" />
     <Image Include="resources\boss.bmp" />
@@ -165,10 +166,13 @@
     <Image Include="resources\card_8.bmp" />
     <Image Include="resources\card_9.bmp" />
     <Image Include="resources\card_choose_bg.bmp" />
+    <Image Include="resources\card_select.bmp" />
     <Image Include="resources\card_wound.bmp" />
     <Image Include="resources\choose_bg.bmp" />
+    <Image Include="resources\consumed_energy.bmp" />
     <Image Include="resources\databox_me.bmp" />
     <Image Include="resources\databox_rival.bmp" />
+    <Image Include="resources\defend_act.bmp" />
     <Image Include="resources\defense.bmp" />
     <Image Include="resources\discarded_cards.bmp" />
     <Image Include="resources\draw_cards.bmp" />
@@ -188,6 +192,7 @@
     <Image Include="resources\info_2.bmp" />
     <Image Include="resources\info_3.bmp" />
     <Image Include="resources\info_4.bmp" />
+    <Image Include="resources\lack_energy.bmp" />
     <Image Include="resources\last_help_page.bmp" />
     <Image Include="resources\lose.bmp" />
     <Image Include="resources\menu.bmp" />

@@ -1,5 +1,4 @@
 #include "Pokemon_Go.h"
-
 //绘图函数
 void Paint(HWND hWnd)
 {
@@ -333,16 +332,46 @@ void Paint(HWND hWnd)
 
 
 		//绘制能量
-		for (int i = 1; i <= MyPokemon->energy; i++)
+		if (consumed_energy <= MyPokemon->energy)
 		{
-			SelectObject(hdc_loadBmp, bmp_energy);
+			for (int i = 1; i <= MyPokemon->energy; i++)
+			{
+				if (i <= MyPokemon->energy - consumed_energy) SelectObject(hdc_loadBmp, bmp_energy);
+				else SelectObject(hdc_loadBmp, bmp_consumed_energy);
+				TransparentBlt(
+					hdc_memBuffer,
+					i * 80 + 220, 410,			// 界面上起始绘制点
+					64, 64,											// 界面上绘制宽度高度
+					hdc_loadBmp,
+					0, 0,	// 位图上起始绘制点
+					128, 128,											// 位图上绘制宽度高度
+					RGB(255, 255, 255)
+				);
+			}
+		}
+		else
+		{
+			for (int i = 1; i <= MyPokemon->energy; i++)
+			{
+				SelectObject(hdc_loadBmp, bmp_energy);
+				TransparentBlt(
+					hdc_memBuffer,
+					i * 80 + 220, 410,			// 界面上起始绘制点
+					64, 64,											// 界面上绘制宽度高度
+					hdc_loadBmp,
+					0, 0,	// 位图上起始绘制点
+					128, 128,											// 位图上绘制宽度高度
+					RGB(255, 255, 255)
+				);
+			}
+			SelectObject(hdc_loadBmp, bmp_lack_energy);
 			TransparentBlt(
 				hdc_memBuffer,
-				i * 80 + 220, 410,			// 界面上起始绘制点
-				64, 64,											// 界面上绘制宽度高度
+				(MyPokemon->energy + 1) * 80 + 220, 360,			// 界面上起始绘制点
+				65, 100,											// 界面上绘制宽度高度
 				hdc_loadBmp,
 				0, 0,	// 位图上起始绘制点
-				128, 128,											// 位图上绘制宽度高度
+				130, 200,											// 位图上绘制宽度高度
 				RGB(255, 255, 255)
 			);
 		}
@@ -721,6 +750,20 @@ void Paint(HWND hWnd)
 		}
 #pragma endregion
 
+		if (card_select != 0)
+		{
+			SelectObject(hdc_loadBmp, bmp_card_select);
+			TransparentBlt(
+				hdc_memBuffer,
+				200 * card_select - 96, 480,			// 界面上起始绘制点
+				200, 290,											// 界面上绘制宽度高度
+				hdc_loadBmp,
+				0, 0,	// 位图上起始绘制点
+				200, 300,											// 位图上绘制宽度高度
+				RGB(255, 255, 255)
+			);
+		}
+
 		#pragma region 绘制双方防御
 		if (MyPokemon->defense != 0)
 		{
@@ -930,16 +973,46 @@ void Paint(HWND hWnd)
 		
 
 		//绘制能量
-		for (int i = 1; i <= MyPokemon->energy; i++)
+		if (consumed_energy <= MyPokemon->energy)
 		{
-			SelectObject(hdc_loadBmp, bmp_energy);
+			for (int i = 1; i <= MyPokemon->energy; i++)
+			{
+				if (i <= MyPokemon->energy - consumed_energy) SelectObject(hdc_loadBmp, bmp_energy);
+				else SelectObject(hdc_loadBmp, bmp_consumed_energy);
+				TransparentBlt(
+					hdc_memBuffer,
+					i * 80 + 220, 410,			// 界面上起始绘制点
+					64, 64,											// 界面上绘制宽度高度
+					hdc_loadBmp,
+					0, 0,	// 位图上起始绘制点
+					128, 128,											// 位图上绘制宽度高度
+					RGB(255, 255, 255)
+				);
+			}
+		}
+		else
+		{
+			for (int i = 1; i <= MyPokemon->energy; i++)
+			{
+				SelectObject(hdc_loadBmp, bmp_energy);
+				TransparentBlt(
+					hdc_memBuffer,
+					i * 80 + 220, 410,			// 界面上起始绘制点
+					64, 64,											// 界面上绘制宽度高度
+					hdc_loadBmp,
+					0, 0,	// 位图上起始绘制点
+					128, 128,											// 位图上绘制宽度高度
+					RGB(255, 255, 255)
+				);
+			}
+			SelectObject(hdc_loadBmp, bmp_lack_energy);
 			TransparentBlt(
 				hdc_memBuffer,
-				i * 80 + 220, 410,			// 界面上起始绘制点
-				64, 64,											// 界面上绘制宽度高度
+				(MyPokemon->energy + 1) * 80 + 220, 360,			// 界面上起始绘制点
+				65, 100,											// 界面上绘制宽度高度
 				hdc_loadBmp,
 				0, 0,	// 位图上起始绘制点
-				128, 128,											// 位图上绘制宽度高度
+				130, 200,											// 位图上绘制宽度高度
 				RGB(255, 255, 255)
 			);
 		}
@@ -1386,6 +1459,20 @@ void Paint(HWND hWnd)
 			);
 		}
 #pragma endregion
+
+		if (card_select != 0)
+		{
+			SelectObject(hdc_loadBmp, bmp_card_select);
+			TransparentBlt(
+				hdc_memBuffer,
+				200 * card_select - 96, 480,			// 界面上起始绘制点
+				200, 290,											// 界面上绘制宽度高度
+				hdc_loadBmp,
+				0, 0,	// 位图上起始绘制点
+				200, 300,											// 位图上绘制宽度高度
+				RGB(255, 255, 255)
+			);
+		}
 	}
 	else if (currentStage->stageID == STAGE_WIN)
 	{
@@ -1451,7 +1538,47 @@ void Paint(HWND hWnd)
 		}
 	}
 	
-
+	//绘制攻击、防御
+	if (attack_on == 2)
+	{
+		SelectObject(hdc_loadBmp, bmp_attack_act);
+		TransparentBlt(
+			hdc_memBuffer, 675, 200,
+			82, 174,
+			hdc_loadBmp, FRAMES_ATTACK[attack_frame_id] * 82, 0, 82, 174,
+			RGB(255, 255, 255)
+		);
+	}
+	if (attack_on == 1)
+	{
+		SelectObject(hdc_loadBmp, bmp_attack_act);
+		TransparentBlt(
+			hdc_memBuffer, 150, 330,
+			82, 174,
+			hdc_loadBmp, FRAMES_ATTACK[attack_frame_id] * 82, 0, 82, 174,
+			RGB(255, 255, 255)
+		);
+	}
+	if (defend_on == 1)
+	{
+		SelectObject(hdc_loadBmp, bmp_defend_act);
+		TransparentBlt(
+			hdc_memBuffer, 120, 340,
+			150, 150,
+			hdc_loadBmp, FRAMES_DEFEND[defend_frame_id] * 200, 0, 200, 200,
+			RGB(255, 255, 255)
+		);
+	}
+	if (defend_on == 2)
+	{
+		SelectObject(hdc_loadBmp, bmp_defend_act);
+		TransparentBlt(
+			hdc_memBuffer, 650, 200,
+			150, 150,
+			hdc_loadBmp, FRAMES_DEFEND[defend_frame_id] * 200, 0, 200, 200,
+			RGB(255, 255, 255)
+		);
+	}
 
 	// 最后将所有的信息绘制到屏幕上
 	BitBlt(hdc_window, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, hdc_memBuffer, 0, 0, SRCCOPY);
@@ -1466,3 +1593,4 @@ void Paint(HWND hWnd)
 	// 结束绘制
 	EndPaint(hWnd, &ps);
 }
+
